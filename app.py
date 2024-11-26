@@ -1,10 +1,11 @@
 from flask import Flask, render_template, jsonify, request
-from llm import ChatBotLLM
+# from llm import ChatBotLLM
+from cge import ChatBotCGE
 import comprasnet
 
 app = Flask(__name__)
 
-chatbot = ChatBotLLM(data='data/dados_transporte_orcamentaria_com_perguntas.csv')
+chatbot = ChatBotCGE(data='data/dados_transporte_orcamentaria_com_perguntas.csv')
 
 @app.route('/')
 def index():
