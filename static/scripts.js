@@ -97,7 +97,7 @@ async function sendMessage(message = null) {
 
         const botMessageElement = document.createElement("div");
         botMessageElement.classList.add("message", "bot-message");
-        botMessageElement.innerHTML = "Atualmente, 50 licitações estão em situação de risco, sendo que o principal critério que leva a essa classificação é a presença de anomalias no orçamento."
+        botMessageElement.innerHTML = "Atualmente, <b>50 licitações estão em situação de risco</b>, sendo que o principal critério que leva a essa classificação é a presença de anomalias no orçamento."
 
         messagesContainer.appendChild(botMessageElement);
         botMessageElement.after(feedbackContainer);
