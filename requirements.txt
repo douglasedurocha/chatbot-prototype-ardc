@@ -1,0 +1,8 @@
+pandas
+langchain_google_genai
+langchain
+rich
+langchain_community
+faiss-cpu
+flask
+selenium
