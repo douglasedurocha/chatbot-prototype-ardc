@@ -31,6 +31,10 @@ def add_message(driver, message):
 def guide():
     # Navega para a página do Google
     driver = webdriver.Firefox()
+    
+    # Maximiza a janela do navegador
+    driver.maximize_window()
+
     driver.get("https://www.google.com")
 
     # Espera a página carregar
@@ -49,8 +53,8 @@ def guide():
             user_completed = True
         time.sleep(1)
 
-    add_message(driver, "Ótimo! Agora, pressione a tecla 'Enter' ou clique no botão 'Google Search'.")
-    print("Ótimo! Agora, pressione a tecla 'Enter' ou clique no botão 'Google Search'.")
+    add_message(driver, "Ótimo! Agora, pressione a tecla 'Enter' ou clique no botão 'Pesquisa Google'.")
+    print("Ótimo! Agora, pressione a tecla 'Enter' ou clique no botão 'Pesquisa Google'.")
 
     # Destaca o botão de pesquisa
     search_button = driver.find_element(By.NAME, "btnK")
