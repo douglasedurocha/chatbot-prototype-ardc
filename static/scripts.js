@@ -45,110 +45,6 @@ async function sendMessage(message = null) {
 
     showTypingIndicator();
 
-    if (userMessage == "Elabore uma análise detalhada em formato de gráficos sobre o transporte coletivo de Goiânia nos últimos dois trimestres, considerando todos os principais padrões de análise de custos.") {
-        await new Promise(resolve => setTimeout(resolve, 1800));
-
-        removeTypingIndicator();
-    
-        const botMessageElement = document.createElement("div");
-        botMessageElement.classList.add("message", "bot-message");
-        botMessageElement.innerHTML = `<img src="${graficoImageUrl}" alt="Gráfico" style="max-width: 100%;">`;
-    
-        // Cria os botões de feedback
-        const feedbackContainer = document.createElement("div");
-        feedbackContainer.classList.add("feedback-container");
-
-        const likeButton = document.createElement("i");
-        likeButton.classList.add("fas", "fa-thumbs-up", "feedback-btn");
-        likeButton.onclick = () => handleFeedback(likeButton, "Obrigado pelo feedback positivo!", "like");
-
-        const dislikeButton = document.createElement("i");
-        dislikeButton.classList.add("fas", "fa-thumbs-down", "feedback-btn");
-        dislikeButton.onclick = () => handleFeedback(dislikeButton, "Agradecemos o feedback!", "dislike");
-
-        feedbackContainer.appendChild(likeButton);
-        feedbackContainer.appendChild(dislikeButton);
-
-        messagesContainer.appendChild(botMessageElement);
-        botMessageElement.after(feedbackContainer);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        return;
-    }
-
-    if (userMessage.toLowerCase().substring(0, 10) === "quantas li") {
-        await new Promise(resolve => setTimeout(resolve, 1800));
-
-        removeTypingIndicator();
-
-        // Cria os botões de feedback
-        const feedbackContainer = document.createElement("div");
-        feedbackContainer.classList.add("feedback-container");
-
-        const likeButton = document.createElement("i");
-        likeButton.classList.add("fas", "fa-thumbs-up", "feedback-btn");
-        likeButton.onclick = () => handleFeedback(likeButton, "Obrigado pelo feedback positivo!", "like");
-
-        const dislikeButton = document.createElement("i");
-        dislikeButton.classList.add("fas", "fa-thumbs-down", "feedback-btn");
-        dislikeButton.onclick = () => handleFeedback(dislikeButton, "Agradecemos o feedback!", "dislike");
-
-        feedbackContainer.appendChild(likeButton);
-        feedbackContainer.appendChild(dislikeButton);
-
-        const botMessageElement = document.createElement("div");
-        botMessageElement.classList.add("message", "bot-message");
-        botMessageElement.innerHTML = "Atualmente, <b>50 licitações estão em situação de risco</b>, sendo que o principal critério que leva a essa classificação é a presença de anomalias no orçamento."
-
-        messagesContainer.appendChild(botMessageElement);
-        botMessageElement.after(feedbackContainer);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        return;
-    }
-
-    if (userMessage.toLowerCase().substring(0, 9) === "me ensine") {
-        await new Promise(resolve => setTimeout(resolve, 1800));
-
-        removeTypingIndicator();
-
-        // Cria os botões de feedback
-        const feedbackContainer = document.createElement("div");
-        feedbackContainer.classList.add("feedback-container");
-
-        const likeButton = document.createElement("i");
-        likeButton.classList.add("fas", "fa-thumbs-up", "feedback-btn");
-        likeButton.onclick = () => handleFeedback(likeButton, "Obrigado pelo feedback positivo!", "like");
-
-        const dislikeButton = document.createElement("i");
-        dislikeButton.classList.add("fas", "fa-thumbs-down", "feedback-btn");
-        dislikeButton.onclick = () => handleFeedback(dislikeButton, "Agradecemos o feedback!", "dislike");
-
-        feedbackContainer.appendChild(likeButton);
-        feedbackContainer.appendChild(dislikeButton);
-
-        const botMessageElement = document.createElement("div");
-        botMessageElement.classList.add("message", "bot-message");
-        botMessageElement.innerHTML = "<p>Claro! Posso guiar o seu acesso pela web até encontrar o site do ComprasNet, vamos lá?</p>";
-
-        const guideButton = document.createElement("button");
-        guideButton.classList.add("guide-btn");
-        guideButton.textContent = "Começar Acesso Guiado";
-        botMessageElement.appendChild(guideButton);
-        guideButton.onclick = () => {
-            fetch("http://localhost:5000/api/guideaccess")
-                .then(response => response.json())
-                .catch(error => {
-                    console.error("Erro ao iniciar o acesso guiado:", error);
-                });
-        }
-
-        messagesContainer.appendChild(botMessageElement);
-        botMessageElement.after(feedbackContainer);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        return;
-    }
-
     try {
         const response = await fetch("http://localhost:5000/api/chatbot", {
             method: "POST",
@@ -163,7 +59,7 @@ async function sendMessage(message = null) {
 
         const botMessageElement = document.createElement("div");
         botMessageElement.classList.add("message", "bot-message");
-        botMessageElement.textContent = data.result;
+        botMessageElement.textContent = data.answer;
 
         // Cria os botões de feedback
         const feedbackContainer = document.createElement("div");

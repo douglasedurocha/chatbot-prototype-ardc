@@ -1,11 +1,11 @@
-from flask import Flask, render_template, jsonify, request
-# from llm import ChatBotLLM
-from cge import ChatBotCGE
-import comprasnet
+import openai
+from flask import Flask, request, jsonify, session, render_template
+import os
 
 app = Flask(__name__)
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "default_secret_key")
 
-chatbot = ChatBotCGE(data='data/dados_transporte_orcamentaria_com_perguntas.csv')
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 @app.route('/')
 def index():
@@ -15,18 +15,33 @@ def index():
 def chatbot_endpoint():
     data = request.get_json()
     question = data.get("question")
-    
+
     if not question:
         return jsonify({"error": "Please provide a question"}), 400
 
-    response = chatbot.get_response(question)
-    
-    return jsonify(response)
+    if 'messages' not in session:
+        session['messages'] = [
+            {"role": "system", "content": "You are a helpful assistant."}
+        ]
 
-@app.route('/api/guideaccess')
-def open_guide_access():
-    comprasnet.guide()
-    return jsonify({"message": "Guide access opened"})
+    try:
+        session['messages'].append({"role": "user", "content": question})
 
-if __name__ == '__main__':
-    app.run()
+        openai.api_key = OPENAI_API_KEY
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # Use your desired model
+            messages=session['messages'],
+            max_tokens=100
+        )
+
+        answer = response['choices'][0]['message']['content']
+
+        session['messages'].append({"role": "assistant", "content": answer})
+        
+        return jsonify({"answer": answer}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(debug=True)
