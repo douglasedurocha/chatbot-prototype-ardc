@@ -46,7 +46,7 @@ async function sendMessage(message = null) {
     showTypingIndicator();
 
     try {
-        const response = await fetch("https://78f7-131-72-88-238.ngrok-free.app/api/chatbot", {
+        const response = await fetch("https://chatbot-prototype-ardc.vercel.app/api/chatbot", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
