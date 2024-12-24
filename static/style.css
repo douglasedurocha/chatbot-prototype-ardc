@@ -14,7 +14,7 @@ body {
 }
 
 .logo {
-    width: 70px;
+    width: 120px;
 }
 
 h4 {
@@ -58,7 +58,7 @@ a:hover {
 }
 
 .send-btn {
-    background-color: #007bff;
+    background-color: #e80775;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -74,7 +74,7 @@ a:hover {
 }
 
 .send-btn .fas {
-    color: green;
+    color: #e80775;
 }
 
 .content {
@@ -107,16 +107,14 @@ a:hover {
 .user-message {
     background-color: #f1f1f1;
     align-self: flex-end;
-    border-right: 4px solid #0b6611;
+    border-right: 4px solid #e80775;
 }
 
 .bot-message {
-    background-color: #e1f5e1;
+    background-color: #fce4ec;
     align-self: flex-start;
-    border-left: 4px solid #4caf50;
+    border-left: 4px solid #e80775;
 }
-
-
 
 /* Animação de digitação */
 .typing-indicator {
@@ -143,7 +141,6 @@ a:hover {
 }
 
 @keyframes typing {
-
     0%,
     80%,
     100% {
@@ -165,15 +162,15 @@ a:hover {
 }
 
 .feedback-btn.selected-like {
-    color: green;
+    color: #fddc54;
 }
 
 .feedback-btn.selected-dislike {
-    color: red;
+    color: #fddc54;
 }
 
 .guide-btn {
-    background-color: #4CAF50;
+    background-color: #e80775;
     border: none;
     color: white;
     padding: 6px 15px;
@@ -186,5 +183,5 @@ a:hover {
 }
 
 .guide-btn:hover {
-    background-color: #45a049;
+    background-color: #fddc54;
 }

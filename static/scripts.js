@@ -46,7 +46,7 @@ async function sendMessage(message = null) {
     showTypingIndicator();
 
     try {
-        const response = await fetch("http://localhost:5000/api/chatbot", {
+        const response = await fetch("https://78f7-131-72-88-238.ngrok-free.app/api/chatbot", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -59,7 +59,9 @@ async function sendMessage(message = null) {
 
         const botMessageElement = document.createElement("div");
         botMessageElement.classList.add("message", "bot-message");
-        botMessageElement.textContent = data.answer;
+
+        // Usando a biblioteca Marked.js para converter o Markdown para HTML
+        botMessageElement.innerHTML = marked.parse(data.answer);
 
         // Cria os botões de feedback
         const feedbackContainer = document.createElement("div");
