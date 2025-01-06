@@ -87,7 +87,7 @@ a:hover {
 }
 
 .messages {
-    height: 85vh;
+    height: 80vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -184,4 +184,29 @@ a:hover {
 
 .guide-btn:hover {
     background-color: #fddc54;
+}
+
+.custom-btn {
+    background-color: transparent;
+    border: 1px solid #e80775;
+    border-radius: 50px;
+    color: #e80775;
+    padding: 8px 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.custom-btn:hover {
+    background-color: #e80775;
+    color: #fff;
+}
+
+.custom-btn i {
+    margin-right: 8px;
+}
+
+.button-group button {
+    cursor: pointer;
 }
