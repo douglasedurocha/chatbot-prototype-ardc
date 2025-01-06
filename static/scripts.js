@@ -115,7 +115,7 @@ function showFeedbackToast(message) {
     toastElement.show();
 }
 
-document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+document.getElementById('compareForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const formData = new FormData();
@@ -133,7 +133,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     messagesContainer.appendChild(userMessageElement);
 
 
-    const modalElement = document.getElementById('uploadModal');
+    const modalElement = document.getElementById('compareModal');
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 
@@ -179,6 +179,12 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
         botMessageElement.after(feedbackContainer);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     } catch (error) {
+        removeTypingIndicator();
+        // Adiciona mensagem de erro ao chat
+        const botMessageElement = document.createElement('div');
+        botMessageElement.classList.add('message', 'bot-message');
+        botMessageElement.textContent = 'Ocorreu um erro. Tente novamente.';
+        messagesContainer.appendChild(botMessageElement);
         console.error('Erro ao comparar documentos:', error);
     }
 });

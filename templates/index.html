@@ -49,10 +49,10 @@
                         </button>
                     </div>
                     <div class="button-group d-flex mt-3 gap-2">
-                        <button class="custom-btn mr-2" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        <button class="custom-btn mr-2" type="button" data-bs-toggle="modal" data-bs-target="#compareModal">
                             <i class="fas fa-file-alt mr-2"></i>Comparar Documentos
                         </button>
-                        <button class="custom-btn" type="button" onclick="analyzeDocument()">
+                        <button class="custom-btn" type="button" data-bs-toggle="modal" data-bs-target="#analysisModal">
                             <i class="fas fa-file mr-2"></i>Analisar Documento
                         </button>
                     </div>
@@ -61,16 +61,16 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <!-- Modal Compare -->
+    <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="uploadModalLabel">Comparar Documentos</h5>
+                    <h5 class="modal-title" id="compareModalLabel">Comparar Documentos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="uploadForm" enctype="multipart/form-data">
+                    <form id="compareForm" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="document_1" class="form-label">Documento 1</label>
                             <input type="file" class="form-control" id="document_1" name="document_1" required>
@@ -80,6 +80,27 @@
                             <input type="file" class="form-control" id="document_2" name="document_2" required>
                         </div>
                         <button type="submit" class="custom-btn">Comparar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Analysis -->
+    <div class="modal fade" id="analysisModal" tabindex="-1" aria-labelledby="analysisModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="analysisModalLabel">Analisar Documento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="analysisForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="document_1" class="form-label">Documento</label>
+                            <input type="file" class="form-control" id="document_1" name="document_1" required>
+                        </div>
+                        <button type="submit" class="custom-btn">Analisar</button>
                     </form>
                 </div>
             </div>
