@@ -46,7 +46,7 @@ async function sendMessage(message = null) {
     showTypingIndicator();
 
     try {
-        const response = await fetch("https://chatbot-prototype-ardc.vercel.app/api/chatbot", {
+        const response = await fetch("/api/chatbot", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -114,3 +114,71 @@ function showFeedbackToast(message) {
     const toastElement = new bootstrap.Toast(document.getElementById('feedbackToast'));
     toastElement.show();
 }
+
+document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+
+    document1 = document.getElementById('document_1').files[0];
+    document2 = document.getElementById('document_2').files[0];
+
+    formData.append('document_1', document1);
+    formData.append('document_2', document2);
+
+    const messagesContainer = document.getElementById('messages');
+    const userMessageElement = document.createElement('div');
+    userMessageElement.classList.add('message', 'user-message');
+    userMessageElement.textContent = `Comparar documentos ${document1.name} e ${document2.name}`;
+    messagesContainer.appendChild(userMessageElement);
+
+
+    const modalElement = document.getElementById('uploadModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+
+    showTypingIndicator();
+
+    try {
+        const response = await fetch('/api/compare_documents', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+        removeTypingIndicator();
+
+        // Exibir resposta do bot
+        const messagesContainer = document.getElementById('messages');
+        const botMessageElement = document.createElement('div');
+        botMessageElement.classList.add('message', 'bot-message');
+
+        // Exibir resposta da comparação
+        if (data.comparison) {
+            botMessageElement.innerHTML = marked.parse(data.comparison);
+        } else {
+            botMessageElement.textContent = "Ocorreu um erro. Tente novamente.";
+        }
+
+        // Criação de botões de feedback
+        const feedbackContainer = document.createElement("div");
+        feedbackContainer.classList.add("feedback-container");
+
+        const likeButton = document.createElement("i");
+        likeButton.classList.add("fas", "fa-thumbs-up", "feedback-btn");
+        likeButton.onclick = () => handleFeedback(likeButton, "Obrigado pelo feedback positivo!", "like");
+
+        const dislikeButton = document.createElement("i");
+        dislikeButton.classList.add("fas", "fa-thumbs-down", "feedback-btn");
+        dislikeButton.onclick = () => handleFeedback(dislikeButton, "Agradecemos o feedback!", "dislike");
+
+        feedbackContainer.appendChild(likeButton);
+        feedbackContainer.appendChild(dislikeButton);
+
+        messagesContainer.appendChild(botMessageElement);
+        botMessageElement.after(feedbackContainer);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    } catch (error) {
+        console.error('Erro ao comparar documentos:', error);
+    }
+});

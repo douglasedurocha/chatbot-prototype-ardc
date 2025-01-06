@@ -49,7 +49,7 @@
                         </button>
                     </div>
                     <div class="button-group d-flex mt-3 gap-2">
-                        <button class="custom-btn mr-2" type="button" onclick="compareDocuments()">
+                        <button class="custom-btn mr-2" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
                             <i class="fas fa-file-alt mr-2"></i>Comparar Documentos
                         </button>
                         <button class="custom-btn" type="button" onclick="analyzeDocument()">
@@ -61,6 +61,32 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Comparar Documentos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="document_1" class="form-label">Documento 1</label>
+                            <input type="file" class="form-control" id="document_1" name="document_1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="document_2" class="form-label">Documento 2</label>
+                            <input type="file" class="form-control" id="document_2" name="document_2" required>
+                        </div>
+                        <button type="submit" class="custom-btn">Comparar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="feedbackToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
