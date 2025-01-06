@@ -188,3 +188,75 @@ document.getElementById('compareForm').addEventListener('submit', async function
         console.error('Erro ao comparar documentos:', error);
     }
 });
+
+document.getElementById('analysisForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+
+    doc = document.getElementById('document').files[0];
+
+    formData.append('document', doc);
+
+    const messagesContainer = document.getElementById('messages');
+    const userMessageElement = document.createElement('div');
+    userMessageElement.classList.add('message', 'user-message');
+    userMessageElement.textContent = `Analisar documento ${doc.name}`;
+    messagesContainer.appendChild(userMessageElement);
+
+
+    const modalElement = document.getElementById('analysisModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+
+    showTypingIndicator();
+
+    try {
+        const response = await fetch('/api/analyse_document', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+        removeTypingIndicator();
+
+        // Exibir resposta do bot
+        const messagesContainer = document.getElementById('messages');
+        const botMessageElement = document.createElement('div');
+        botMessageElement.classList.add('message', 'bot-message');
+
+        // Exibir resposta da análise
+        if (data.analysis) {
+            botMessageElement.innerHTML = marked.parse(data.analysis);
+        } else {
+            botMessageElement.textContent = "Ocorreu um erro. Tente novamente.";
+        }
+
+        // Criação de botões de feedback
+        const feedbackContainer = document.createElement("div");
+        feedbackContainer.classList.add("feedback-container");
+
+        const likeButton = document.createElement("i");
+        likeButton.classList.add("fas", "fa-thumbs-up", "feedback-btn");
+        likeButton.onclick = () => handleFeedback(likeButton, "Obrigado pelo feedback positivo!", "like");
+
+        const dislikeButton = document.createElement("i");
+        dislikeButton.classList.add("fas", "fa-thumbs-down", "feedback-btn");
+        dislikeButton.onclick = () => handleFeedback(dislikeButton, "Agradecemos o feedback!", "dislike");
+
+        feedbackContainer.appendChild(likeButton);
+        feedbackContainer.appendChild(dislikeButton);
+
+        messagesContainer.appendChild(botMessageElement);
+        botMessageElement.after(feedbackContainer);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    } catch (error) {
+        removeTypingIndicator();
+        // Adiciona mensagem de erro ao chat
+        const botMessageElement = document.createElement('div');
+        botMessageElement.classList.add('message', 'bot-message');
+        botMessageElement.textContent = 'Ocorreu um erro. Tente novamente.';
+        messagesContainer.appendChild(botMessageElement);
+        console.error('Erro ao analisar documentos:', error);
+    }
+});

@@ -105,5 +105,30 @@ def compare_documents():
         print(e)
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/analyse_document', methods=['POST'])
+def analyse_document():
+    if 'document' not in request.files:
+        return jsonify({"error": "Por favor, forneça um documento"}), 400
+
+    doc = request.files['document']
+
+    # Determinar tipo de documento e processar
+    if doc.filename.endswith('.pdf'):
+        document = processar_pdf(doc)
+    elif doc.filename.endswith('.docx'):
+        document = processar_docx(doc)
+    else:
+        return jsonify({"error": "Tipo de arquivo do documento 1 não suportado"}), 400
+
+    # Criando uma mensagem para o assistente analisar o documento
+    mensagem = f"Forneça uma análise detalhada do seguinte documento:\n\n{document}\n\nInclua os principais pontos abordados, qualquer informação crítica e um resumo geral."
+
+    try:
+        resposta = obter_resposta(mensagem)
+        return jsonify({"analysis": resposta}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
